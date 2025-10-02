@@ -27,8 +27,8 @@ class StealthRecon:
     def __init__(self):
         self.output_dir = None
         self.target_domain = None
-        self.delay_min = 2  # Delay mínimo entre comandos
-        self.delay_max = 8  # Delay máximo entre comandos
+        self.delay_min = 10  # Delay mínimo entre comandos
+        self.delay_max = 25  # Delay máximo entre comandos
         
     def setup_output_directory(self, domain):
         """Cria diretório de saída organizado"""
@@ -95,7 +95,7 @@ class StealthRecon:
         # Comando nmap otimizado para evasão de WAF
         nmap_cmd = (
             f"nmap -sS -T1 "  # SYN stealth scan, timing mais lento
-            f"--scan-delay 3s "  # 3 segundos entre cada probe
+            f"--scan-delay 10s "  # 10 segundos entre cada probe
             f"--max-retries 2 "  # Máximo 2 tentativas
             f"--max-scan-delay 10s "  # Delay máximo de 10s
             f"-f "  # Fragmentar pacotes
@@ -143,7 +143,7 @@ class StealthRecon:
         whatweb_cmd = (
             f"whatweb "
             f"--aggression 1 "  # Nível de agressividade baixo
-            f"--wait 3 "  # Aguardar 3 segundos entre requests
+            f"--wait 10 "  # Aguardar 10 segundos entre requests
             f"--read-timeout 30 "  # Timeout de leitura
             f"--max-threads 1 "  # Apenas 1 thread
             f"--log-json {output_file} "
@@ -172,7 +172,7 @@ class StealthRecon:
             f"-t /home/kali/nuclei-templates/http/exposures/ "     # Exposições básicas
             f"-t /home/kali/nuclei-templates/http/misconfiguration/ "  # Misconfiguração
             f"-severity info,low "  # Apenas severidade baixa
-            f"-rate-limit 30 "  # Máximo 30 requests por minuto
+            f"-rate-limit 10 "  # Máximo 30 requests por minuto
             f"-timeout 30 "  # Timeout de 30s
             f"-retries 1 "  # Apenas 1 retry
             f"-json "
